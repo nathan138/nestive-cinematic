@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nestive — Control your home the smart way</title>
+    <meta name="description" content="Nestive — ambient control of your space, without lifting a finger." />
+    <meta name="theme-color" content="#8f9a8c" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body class="is-loading">
+    <canvas id="webgl" aria-hidden="true"></canvas>
+
+    <!-- ============ LOADER ============ -->
+    <div class="loader" id="loader">
+      <div class="loader__center">
+        <div class="loader__brand">
+          <svg class="logo" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M4 14.5 16 5l12 9.5V26a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 4 26z"/><path d="M8.5 19.5h4l2-4 3 8 2-4h4"/></svg>
+          <span>Nestive</span>
+        </div>
+        <p class="loader__title"><em>Waking</em> up your home</p>
+      </div>
+      <ul class="loader__log">
+        <li>› calibrating climate core</li>
+        <li>› syncing 24 devices</li>
+        <li>› tuning adaptive glass</li>
+        <li>› ambient systems online</li>
+      </ul>
+      <div class="loader__count"><span class="js-count">000</span></div>
+      <div class="loader__bar"><span></span></div>
+    </div>
+
+    <div class="letterbox" aria-hidden="true"><span></span><span></span></div>
+
+    <!-- ============ NAV ============ -->
+    <header class="nav">
+      <a class="brand" href="#hero" data-link>
+        <svg class="logo" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M4 14.5 16 5l12 9.5V26a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 4 26z"/><path d="M8.5 19.5h4l2-4 3 8 2-4h4"/></svg>
+        <span>Nestive</span>
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#hero" data-link data-nav="hero" class="is-active">Home</a><i></i>
+        <a href="#ambient" data-link data-nav="ambient">Features</a><i></i>
+        <a href="#inside" data-link data-nav="inside">Devices</a><i></i>
+        <a href="#steps" data-link data-nav="steps">Support</a><i></i>
+        <a href="#final" data-link data-nav="final">Login</a>
+      </nav>
+      <div class="nav__tools">
+        <button class="lang" type="button">EN <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <button class="icon-btn" type="button" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg></button>
+        <button class="icon-btn burger" type="button" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </header>
+
+    <!-- ============ HUD ============ -->
+    <aside class="hud" aria-hidden="true">
+      <div class="hud__index">
+        <span class="js-index">01</span>
+        <i><b class="js-progress"></b></i>
+        <span>07</span>
+      </div>
+      <div class="hud__clock">
+        <div class="hud__dial">
+          <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" /><path d="M24 2v4M24 42v4M2 24h4M42 24h4" /></svg>
+          <span class="hud__sun js-sun"></span>
+        </div>
+        <div class="hud__time-wrap">
+          <span class="hud__time js-time">07:40</span>
+          <span class="hud__phase js-phase">Morning</span>
+        </div>
+      </div>
+      <div class="hud__scroll"><span class="hud__mouse"><i></i></span>Scroll to explore</div>
+      <div class="hud__meta"><span class="live-dot"></span>Live · <span class="js-temp-hud">21.5°C</span> · 48% RH</div>
+    </aside>
+
+    <!-- ============ HOTSPOTS (anatomy) ============ -->
+    <div class="hotspots" aria-hidden="true">
+      <div class="hotspot hotspot--left" data-anchor="glass">
+        <span class="hotspot__dot"></span><span class="hotspot__line"></span>
+        <div class="hotspot__card"><span>A</span><div><strong>Adaptive Glass</strong><small>Electrochromic tint in 0.2s</small></div></div>
+      </div>
+      <div class="hotspot" data-anchor="sentinel">
+        <span class="hotspot__dot"></span><span class="hotspot__line"></span>
+        <div class="hotspot__card"><span>B</span><div><strong>Sentinel Tower</strong><small>360° radar presence sensing</small></div></div>
+      </div>
+      <div class="hotspot hotspot--left" data-anchor="climate">
+        <span class="hotspot__dot"></span><span class="hotspot__line"></span>
+        <div class="hotspot__card"><span>C</span><div><strong>Climate Core</strong><small>21.5° everywhere, always</small></div></div>
+      </div>
+      <div class="hotspot hotspot--left" data-anchor="lighting">
+        <span class="hotspot__dot"></span><span class="hotspot__line"></span>
+        <div class="hotspot__card"><span>D</span><div><strong>Halo Lighting</strong><small>Circadian 2700 – 6500 K</small></div></div>
+      </div>
+      <div class="hotspot" data-anchor="energy">
+        <span class="hotspot__dot"></span><span class="hotspot__line"></span>
+        <div class="hotspot__card"><span>E</span><div><strong>Energy Cell</strong><small>14 kWh solid-state storage</small></div></div>
+      </div>
+    </div>
+
+    <div class="cursor" aria-hidden="true"><span class="cursor__ring"></span><span class="cursor__dot"></span></div>
+
+    <main id="story">
+      <!-- ============ 01 HERO ============ -->
+      <section class="scene hero" id="hero" data-index="01">
+        <div class="hero__content">
+          <div class="social" data-intro>
+            <div class="avatars">
+              <span class="av av--1"></span><span class="av av--2"></span><span class="av av--3"></span>
+            </div>
+            <p>+10,000 people are already using “Nestive”</p>
+          </div>
+          <h1 class="hero__title">
+            <span class="ln"><span>Control <em>Your Home</em></span></span>
+            <span class="ln"><span>The Smart Way</span></span>
+          </h1>
+          <p class="hero__lead" data-intro>
+            Ambient control of your space – without lifting a finger.<br />
+            Your home is just four steps away from being autonomous!
+          </p>
+          <a href="#final" class="cta" data-link data-magnetic data-intro>
+            <span class="cta__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v4M15 3v4M7 7h10v4a5 5 0 0 1-10 0zM12 16v5"/><path d="M4 20 20 4" opacity=".9"/></svg>
+            </span>
+            <span class="cta__label">Connect your space</span>
+          </a>
+        </div>
+
+        <div class="steps-mini" data-intro>
+          <div class="step-mini is-active">
+            <div class="step-mini__card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span>Register</span></div>
+            <div class="step-mini__bar"><i></i></div><span class="step-mini__num">01</span>
+          </div>
+          <div class="step-mini">
+            <div class="step-mini__card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="13" height="10" rx="1.5"/><path d="M6 19h6"/><rect x="17" y="8" width="4.5" height="11" rx="1.2"/></svg><span>Add Devices</span></div>
+            <div class="step-mini__bar"><i></i></div><span class="step-mini__num">02</span>
+          </div>
+          <div class="step-mini">
+            <div class="step-mini__card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16"/><circle cx="12" cy="12" r="3"/></svg><span>Customize</span></div>
+            <div class="step-mini__bar"><i></i></div><span class="step-mini__num">03</span>
+          </div>
+          <div class="step-mini">
+            <div class="step-mini__card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7v8.5a1 1 0 0 1-1 1h-4.5V15h-5v5.5H5a1 1 0 0 1-1-1z"/></svg><span>Start Using</span></div>
+            <div class="step-mini__bar"><i></i></div><span class="step-mini__num">04</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 02 AMBIENT ============ -->
+      <section class="scene scene--tall ambient" id="ambient" data-index="02" style="--h: 220vh">
+        <div class="sticky">
+          <div class="ambient__inner">
+            <span class="label" data-reveal>(01) Ambient intelligence</span>
+            <p class="statement js-statement">
+              A home that <em>listens</em> before you ask. Light, air and sound — <em>quietly</em> tuned to the way you live, hour after hour.
+            </p>
+            <div class="metrics" data-reveal>
+              <div><strong>21.5°</strong><span>Indoor climate</span></div>
+              <div><strong>48%</strong><span>Humidity</span></div>
+              <div><strong>32 dB</strong><span>Ambient noise</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 03 ANATOMY ============ -->
+      <section class="scene scene--tall anatomy" id="anatomy" data-index="03" style="--h: 340vh">
+        <div class="sticky">
+          <div class="anatomy__head">
+            <span class="label" data-reveal>(02) Anatomy</span>
+            <h2 class="title">
+              <span class="ln"><span>Five layers.</span></span>
+              <span class="ln"><span><em>One</em> quiet mind.</span></span>
+            </h2>
+          </div>
+          <div class="anatomy__foot" data-reveal>
+            <p>Built like a product, lived in like a home. Every module ships pre-wired, pre-tuned and ready to talk to the others.</p>
+            <dl class="specs">
+              <div><dt>Modules</dt><dd>05</dd></div>
+              <div><dt>Sensors</dt><dd>142</dd></div>
+              <div><dt>Install</dt><dd>48h</dd></div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 04 INSIDE / DEVICES ============ -->
+      <section class="scene scene--tall inside" id="inside" data-index="04" style="--h: 300vh">
+        <div class="sticky">
+          <div class="inside__head">
+            <span class="label" data-reveal>(03) Devices</span>
+            <h2 class="title">
+              <span class="ln"><span>Every room,</span></span>
+              <span class="ln"><span><em>tuned to you.</em></span></span>
+            </h2>
+            <p class="inside__lead" data-reveal>One calm interface for climate, light, security and energy. Or none at all — Nestive learns your rhythm in a week.</p>
+          </div>
+
+          <div class="devices">
+            <article class="card card--climate" data-card>
+              <header><span class="card__kicker">Climate</span><span class="chip">Eco</span></header>
+              <div class="dial">
+                <svg viewBox="0 0 200 200">
+                  <defs>
+                    <linearGradient id="dialGrad" x1="0" y1="1" x2="1" y2="0">
+                      <stop offset="0" stop-color="#ffd5a1" />
+                      <stop offset="1" stop-color="#ff8a3d" />
+                    </linearGradient>
+                  </defs>
+                  <circle class="dial__track" cx="100" cy="100" r="78" />
+                  <circle class="dial__arc js-dial-arc" cx="100" cy="100" r="78" />
+                  <g class="dial__ticks"></g>
+                </svg>
+                <div class="dial__value"><span class="js-temp">21.5</span><sup>°C</sup><small>Living room</small></div>
+              </div>
+              <footer class="dial__controls">
+                <button type="button" class="round js-temp-down" aria-label="Lower temperature">−</button>
+                <span class="js-temp-label">Holding 21.5°</span>
+                <button type="button" class="round js-temp-up" aria-label="Raise temperature">+</button>
+              </footer>
+            </article>
+
+            <article class="card card--light" data-card>
+              <header><span class="card__kicker">Lighting</span><span class="card__meta">4 rooms</span></header>
+              <div class="tones">
+                <button type="button" class="tone" data-tone="morning"><i style="--c:#ffd7a6"></i>Morning</button>
+                <button type="button" class="tone" data-tone="focus"><i style="--c:#eef1ff"></i>Focus</button>
+                <button type="button" class="tone is-active" data-tone="evening"><i style="--c:#ff9f52"></i>Evening</button>
+                <button type="button" class="tone" data-tone="cinema"><i style="--c:#ff5f24"></i>Cinema</button>
+              </div>
+              <div class="bright"><span>Brightness</span><b class="js-bright">80%</b></div>
+              <div class="bar"><i class="js-bright-bar"></i></div>
+            </article>
+
+            <article class="card card--security" data-card>
+              <header><span class="card__kicker">Security</span><span class="chip chip--ok"><i></i>Armed</span></header>
+              <div class="sec__big">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z"/><path d="m9 12 2 2 4-4"/></svg>
+                <div><strong>All secured</strong><small>Last check 23 s ago</small></div>
+              </div>
+              <ul class="sec__list">
+                <li><span>Front door</span><b>Locked</b></li>
+                <li><span>Garage</span><b>Locked</b></li>
+                <li><span>Windows</span><b>Closed</b></li>
+              </ul>
+            </article>
+
+            <article class="card card--energy" data-card>
+              <header><span class="card__kicker">Energy</span><span class="card__meta">This month</span></header>
+              <div class="energy__big"><strong>−38%</strong><small>vs. last year</small></div>
+              <svg class="spark" viewBox="0 0 220 70" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="sparkFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#ffb064" stop-opacity=".45" />
+                    <stop offset="1" stop-color="#ffb064" stop-opacity="0" />
+                  </linearGradient>
+                </defs>
+                <path class="spark__fill" d="M0 22 C 20 18, 30 30, 48 28 S 80 12, 100 24 S 130 46, 152 40 S 190 52, 220 58 L220 70 L0 70Z" />
+                <path class="spark__line js-spark" d="M0 22 C 20 18, 30 30, 48 28 S 80 12, 100 24 S 130 46, 152 40 S 190 52, 220 58" />
+              </svg>
+              <div class="energy__row"><span>Solar today</span><b>6.2 kWh</b></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 05 NIGHT ============ -->
+      <section class="scene scene--tall night" id="night" data-index="05" style="--h: 300vh">
+        <div class="sticky">
+          <div class="night__head">
+            <span class="label" data-reveal>(04) Night mode</span>
+            <h2 class="title title--xl">
+              <span class="ln"><span>Goodnight,</span></span>
+              <span class="ln"><span><em>automatically.</em></span></span>
+            </h2>
+            <p class="night__lead" data-reveal>At 23:00 the house dims, locks every door and lowers the heat by two degrees. You don't press a thing.</p>
+            <button type="button" class="switch js-lights" aria-pressed="true" data-magnetic data-reveal>
+              <span class="switch__track"><span class="switch__knob"></span></span>
+              <span class="switch__label">House lights <b class="js-lights-state">On</b></span>
+            </button>
+          </div>
+          <div class="stats" data-reveal>
+            <div class="stat"><strong><span class="js-count-up" data-to="38" data-prefix="−" data-suffix="%">0</span></strong><span>Energy saved</span></div>
+            <div class="stat"><strong><span class="js-count-up" data-to="0.2" data-decimals="1" data-suffix="s">0</span></strong><span>Response time</span></div>
+            <div class="stat"><strong><span class="js-count-up" data-to="142">0</span></strong><span>Sensors on watch</span></div>
+            <div class="stat"><strong>24/7</strong><span>Quiet protection</span></div>
+          </div>
+          <div class="marquee" aria-hidden="true">
+            <div class="marquee__track">
+              <span>Climate <i>✦</i> Light <i>✦</i> Presence <i>✦</i> Security <i>✦</i> Energy <i>✦</i> Sound <i>✦</i>&nbsp;</span>
+              <span>Climate <i>✦</i> Light <i>✦</i> Presence <i>✦</i> Security <i>✦</i> Energy <i>✦</i> Sound <i>✦</i>&nbsp;</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 06 STEPS ============ -->
+      <section class="scene scene--tall steps" id="steps" data-index="06" style="--h: 320vh">
+        <div class="sticky">
+          <div class="steps__head">
+            <span class="label" data-reveal>(05) Get started</span>
+            <h2 class="title">
+              <span class="ln"><span>Four steps to an</span></span>
+              <span class="ln"><span><em>autonomous</em> home.</span></span>
+            </h2>
+          </div>
+          <div class="steps__row">
+            <article class="step" data-step>
+              <div class="step__top"><span class="step__num">01</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
+              <h3>Register</h3>
+              <p>Create your Nestive ID and claim your home in under a minute.</p>
+              <div class="step__bar"><i></i></div>
+            </article>
+            <article class="step" data-step>
+              <div class="step__top"><span class="step__num">02</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="13" height="10" rx="1.5"/><path d="M6 19h6"/><rect x="17" y="8" width="4.5" height="11" rx="1.2"/></svg></div>
+              <h3>Add devices</h3>
+              <p>Lights, locks, thermostats — 4,000+ devices pair automatically.</p>
+              <div class="step__bar"><i></i></div>
+            </article>
+            <article class="step" data-step>
+              <div class="step__top"><span class="step__num">03</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16"/><circle cx="12" cy="12" r="3"/></svg></div>
+              <h3>Customize</h3>
+              <p>Shape scenes, schedules and moods around the way you live.</p>
+              <div class="step__bar"><i></i></div>
+            </article>
+            <article class="step" data-step>
+              <div class="step__top"><span class="step__num">04</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7v8.5a1 1 0 0 1-1 1h-4.5V15h-5v5.5H5a1 1 0 0 1-1-1z"/></svg></div>
+              <h3>Start using</h3>
+              <p>Then forget about it. Your home takes it from here.</p>
+              <div class="step__bar"><i></i></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 07 FINAL ============ -->
+      <section class="scene final" id="final" data-index="07">
+        <div class="final__inner">
+          <span class="label label--center" data-reveal>(06) Your move</span>
+          <h2 class="title title--xl">
+            <span class="ln"><span>Your home,</span></span>
+            <span class="ln"><span><em>awake.</em></span></span>
+          </h2>
+          <div class="final__cta" data-reveal>
+            <a href="#hero" class="cta" data-link data-magnetic>
+              <span class="cta__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v4M15 3v4M7 7h10v4a5 5 0 0 1-10 0zM12 16v5"/></svg></span>
+              <span class="cta__label">Connect your space</span>
+            </a>
+            <a href="#hero" class="ghost" data-link data-magnetic>Watch the film <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          </div>
+          <p class="final__note" data-reveal>Available in 14 countries · Ships spring 2027</p>
+        </div>
+      </section>
+
+      <footer class="footer" id="footer">
+        <div class="footer__cols">
+          <div class="footer__brand">
+            <p>Ambient control of your space.<br />Designed for the quiet hours.</p>
+          </div>
+          <div><h4>Product</h4><a href="#ambient" data-link>Features</a><a href="#inside" data-link>Devices</a><a href="#night" data-link>Night mode</a></div>
+          <div><h4>Company</h4><a href="#hero" data-link>About</a><a href="#hero" data-link>Journal</a><a href="#hero" data-link>Careers</a></div>
+          <div><h4>Contact</h4><a href="#hero" data-link>hello@nestive.home</a><a href="#hero" data-link>Instagram</a><a href="#hero" data-link>Dribbble</a></div>
+        </div>
+        <div class="footer__word" aria-hidden="true">Nestive</div>
+        <div class="footer__bar"><span>© 2026 Nestive Labs</span><span>Made with three.js</span><span>Privacy · Terms</span></div>
+      </footer>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
